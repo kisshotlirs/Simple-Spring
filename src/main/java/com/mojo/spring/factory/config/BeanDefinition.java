@@ -2,21 +2,21 @@ package com.mojo.spring.factory.config;
 
 /**
  * @author: zyl
- * @description: 定义bean的实例化信息
+ * @description: bean的定义信息
  */
 public class BeanDefinition {
 
-    private Class bean;
+    private Class beanClass;
 
-    public BeanDefinition(Class bean) {
-        this.bean = bean;
+    public BeanDefinition(Class beanClass) {
+        this.beanClass = beanClass;
     }
 
-    public Class getBean() {
-        return bean;
+    public Class getBeanClass() {
+        return beanClass;
     }
 
-    public void setBean(Class bean) {
-        this.bean = bean;
+    public void setBeanClass(Class beanClass) {
+        this.beanClass = beanClass;
     }
 }

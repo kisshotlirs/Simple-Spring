@@ -1,6 +1,8 @@
 package com.mojo.spring.factory.support;
 
+import com.mojo.spring.BeanException;
 import com.mojo.spring.factory.BeanFactory;
+import com.mojo.spring.factory.config.BeanDefinition;
 
 /**
  * @author: zyl
@@ -10,11 +12,24 @@ public abstract class AbstractBeanFactory extends DefaultSingletonBeanRegistry i
 
     @Override
     public Object getBean(String name) {
+        //尝试获取单例bean
         Object bean = getSingleton(name);
         if (bean != null){
             return bean;
         }
 
-        return null;
+        //获取不到单例bean，拿到bean的定义做相应bean的实例化操作
+        BeanDefinition beanDefinition = getBeanDefinition(name);
+        return createBean(name,beanDefinition);
     }
+
+    /**
+     * 获取bean的定义
+     */
+    protected abstract BeanDefinition getBeanDefinition(String beanName) throws BeanException;
+
+    /**
+     * 根据bean的定义实例化单例bean
+     */
+    protected abstract Object createBean(String beanName,BeanDefinition beanDefinition) throws BeanException;
 }
