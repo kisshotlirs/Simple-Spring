@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  * @author: zyl
- * @description: 默认单例bean获取
+ * @description: 默认单例bean注册
  */
 public class DefaultSingletonBeanRegistry implements SingletonBeanRegistry {
 

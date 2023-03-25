@@ -2,7 +2,7 @@ package com.mojo.spring.factory.config;
 
 /**
  * @author: zyl
- * @description: 获取单例对象接口
+ * @description: 单例注册接口
  */
 public interface SingletonBeanRegistry {
 
