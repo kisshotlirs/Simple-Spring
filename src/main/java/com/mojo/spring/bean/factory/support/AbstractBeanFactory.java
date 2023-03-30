@@ -1,8 +1,8 @@
-package com.mojo.spring.factory.support;
+package com.mojo.spring.bean.factory.support;
 
-import com.mojo.spring.BeanException;
-import com.mojo.spring.factory.BeanFactory;
-import com.mojo.spring.factory.config.BeanDefinition;
+import com.mojo.spring.bean.BeanException;
+import com.mojo.spring.bean.factory.BeanFactory;
+import com.mojo.spring.bean.factory.config.BeanDefinition;
 
 /**
  * @author: zyl

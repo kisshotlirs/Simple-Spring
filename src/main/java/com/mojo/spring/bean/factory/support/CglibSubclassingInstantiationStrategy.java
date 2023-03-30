@@ -1,7 +1,7 @@
-package com.mojo.spring.factory.support;
+package com.mojo.spring.bean.factory.support;
 
-import com.mojo.spring.BeanException;
-import com.mojo.spring.factory.config.BeanDefinition;
+import com.mojo.spring.bean.BeanException;
+import com.mojo.spring.bean.factory.config.BeanDefinition;
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.NoOp;
 

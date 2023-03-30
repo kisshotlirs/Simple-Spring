@@ -1,4 +1,4 @@
-package com.mojo.spring.factory.config;
+package com.mojo.spring.bean.factory.config;
 
 /**
  * @author: zyl

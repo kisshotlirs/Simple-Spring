@@ -1,7 +1,11 @@
-package com.mojo.spring.factory.support;
+package com.mojo.spring.bean.factory.support;
 
-import com.mojo.spring.BeanException;
-import com.mojo.spring.factory.config.BeanDefinition;
+import cn.hutool.core.bean.BeanUtil;
+import com.mojo.spring.bean.BeanException;
+import com.mojo.spring.bean.factory.PropertyValue;
+import com.mojo.spring.bean.factory.PropertyValues;
+import com.mojo.spring.bean.factory.config.BeanReference;
+import com.mojo.spring.bean.factory.config.BeanDefinition;
 
 import java.lang.reflect.Constructor;
 
@@ -19,12 +23,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
     protected Object createBean(String beanName, BeanDefinition beanDefinition, Object[] args) throws BeanException {
         Object bean = null;
         try {
-            if (args == null){
-                //无参构造实例化
-                bean = beanDefinition.getBeanClass().newInstance();
-            } else {
-                bean = createBeanInstance(beanDefinition,beanName,args);
-            }
+            bean = createBeanInstance(beanDefinition,beanName,args);
+            //给bean填充属性
+            applyPropertyValues(beanName,bean,beanDefinition);
         } catch (Exception e){
             throw new BeanException("bean实例化失败", e);
         }
@@ -48,6 +49,29 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
         }
         //使用策略模式，调用时选择使用jdk或cglib实例化 这里使用的是cglib
         return getInstantiationStrategy().instantiate(beanDefinition,beanName,constructor,args);
+    }
+
+    /**
+     * bean属性填充
+     */
+    protected void applyPropertyValues(String beanName,Object bean,BeanDefinition beanDefinition){
+        try {
+            PropertyValues propertyValues = beanDefinition.getPropertyValues();
+            for (PropertyValue propertyValue : propertyValues.getPropertyValues()) {
+                Object value = propertyValue.getValue();
+                String name = propertyValue.getName();
+
+                if (value instanceof BeanReference){
+                    //a依赖b，获取b的实例化
+                    BeanReference beanReference = (BeanReference) value;
+                    value = getBean(beanReference.getBeanName());
+                }
+                //属性填充
+                BeanUtil.setFieldValue(bean,name,value);
+            }
+        } catch (Exception e){
+            throw new BeanException("Bean属性填充错误：" + beanName);
+        }
     }
 
     public InstantiationStrategy getInstantiationStrategy() {

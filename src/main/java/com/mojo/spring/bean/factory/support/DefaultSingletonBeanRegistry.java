@@ -1,6 +1,6 @@
-package com.mojo.spring.factory.support;
+package com.mojo.spring.bean.factory.support;
 
-import com.mojo.spring.factory.config.SingletonBeanRegistry;
+import com.mojo.spring.bean.factory.config.SingletonBeanRegistry;
 
 import java.util.HashMap;
 import java.util.Map;

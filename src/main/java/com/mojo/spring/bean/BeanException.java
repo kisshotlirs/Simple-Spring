@@ -1,4 +1,4 @@
-package com.mojo.spring;
+package com.mojo.spring.bean;
 
 /**
  * @author: zyl

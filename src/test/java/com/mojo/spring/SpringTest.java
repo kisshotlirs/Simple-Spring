@@ -1,10 +1,14 @@
 package com.mojo.spring;
 
+import com.mojo.spring.bean.UserDao;
+import com.mojo.spring.bean.UserServer;
 import com.mojo.spring.bean.UserService;
-import com.mojo.spring.factory.config.BeanDefinition;
-import com.mojo.spring.factory.support.DefaultListableBeanFactory;
+import com.mojo.spring.bean.factory.PropertyValue;
+import com.mojo.spring.bean.factory.PropertyValues;
+import com.mojo.spring.bean.factory.config.BeanDefinition;
+import com.mojo.spring.bean.factory.config.BeanReference;
+import com.mojo.spring.bean.factory.support.DefaultListableBeanFactory;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.NoOp;
 
@@ -81,5 +85,27 @@ public class SpringTest {
         });
         Object obj = enhancer.create(new Class[]{String.class}, new Object[]{"mojo"});
         System.out.println(obj);
+    }
+
+    @Test
+    public void test_beanFactory(){
+        //初始化
+        DefaultListableBeanFactory factory = new DefaultListableBeanFactory();
+
+        //userDao注册
+        factory.registerBeanDefinition("userDao",new BeanDefinition(UserDao.class));
+
+        //userServer设置属性
+        PropertyValues propertyValues = new PropertyValues();
+        propertyValues.addPropertyValue(new PropertyValue("userId","1"));
+        propertyValues.addPropertyValue(new PropertyValue("userDao",new BeanReference("userDao")));
+
+        //userServer注入bean
+        BeanDefinition beanDefinition = new BeanDefinition(UserServer.class, propertyValues);
+        factory.registerBeanDefinition("userServer",beanDefinition);
+
+        //userServer获取bean
+        UserServer userServer = (UserServer) factory.getBean("userServer");
+        userServer.queryUserInfo();
     }
 }

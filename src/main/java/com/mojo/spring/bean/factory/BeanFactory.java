@@ -1,10 +1,6 @@
-package com.mojo.spring.factory;
+package com.mojo.spring.bean.factory;
 
-import com.mojo.spring.BeanException;
-import com.mojo.spring.factory.config.BeanDefinition;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import com.mojo.spring.bean.BeanException;
 
 /**
  * @author: zyl
